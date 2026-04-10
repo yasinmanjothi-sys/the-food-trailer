@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Food Trailer | The trailer under the trees</title>
+    <meta name="description" content="Nairobi's favorite food trailer in South C. Serving the best Burgers, Wraps, and Charcoal Grills under the trees.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <img src="assets/logo.svg" alt="The Food Trailer Logo" id="nav-logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#featured">Specials</a></li>
+                <li><a href="#about">Story</a></li>
+                <li><a href="#location">Find Us</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="https://wa.me/254700000000" class="btn btn-primary" id="order-btn">Order Now</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="badge">Nairobi's Finest</span>
+                <h1>THE TRAILER <br><span class="text-accent">UNDER THE TREES</span></h1>
+                <p>Experience the ultimate street food vibe in South C. From juicy Double Wheelers to flame-grilled spatchcock chicken.</p>
+                <div class="hero-btns">
+                    <a href="#menu" class="btn btn-primary">View Menu</a>
+                    <a href="tel:254700000000" class="btn btn-outline">Call to Order</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="assets/wings.jpg" alt="Signature Wings and Onion Rings" class="floating">
+            </div>
+        </div>
+    </header>
+
+    <section id="featured">
+        <div class="container">
+            <h2 class="section-title">TODAY'S <span class="text-accent">SPECIALS</span></h2>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <div class="card-image">
+                        <img src="assets/masala-fries.jpg" alt="Masala Fries">
+                    </div>
+                    <div class="card-content">
+                        <h3>Masala Fries</h3>
+                        <p>Our famous crispy fries tossed in a spicy, aromatic masala house blend.</p>
+                        <span class="price">Ksh 250</span>
+                    </div>
+                </div>
+                <div class="featured-card highlight">
+                    <div class="card-image">
+                        <img src="assets/bad-boy-burger.jpg" alt="Bad Boy Burger (Avo Splash)">
+                    </div>
+                    <div class="card-content">
+                        <span class="badge">Fan Favorite</span>
+                        <h3>BAD BOY BURGER</h3>
+                        <p>Beef 100g, Bacon & White sauce with our signature Avo Splash.</p>
+                        <span class="price">Ksh 750</span>
+                        <a href="#menu" class="btn btn-secondary">Full Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu">
+        <div class="container">
+            <div class="menu-header">
+                <h2 class="section-title">OUR <span class="text-accent">MENU</span></h2>
+                <div class="menu-tabs">
+                    <button class="menu-tab active" data-category="burgers">Burgers</button>
+                    <button class="menu-tab" data-category="grills">Grills & Specials</button>
+                    <button class="menu-tab" data-category="sides">Fries & Sides</button>
+                    <button class="menu-tab" data-category="drinks">Drinks</button>
+                </div>
+            </div>
+            <div id="menu-container" class="menu-grid">
+                <!-- JavaScript will populate this -->
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container about-content">
+            <div class="about-image">
+                <div class="image-stack">
+                    <img src="assets/wings.jpg" alt="The Experience" class="img-1">
+                    <div class="experience-badge">
+                        <span class="years">5+</span>
+                        <span class="text">Years of Flavor</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2 class="section-title">FROM THE TRAILER <br><span class="text-accent">TO YOUR HEART</span></h2>
+                <p>What started as a simple idea under the trees has grown into South C's most beloved food destination. We believe in high-quality ingredients, flame-grilled perfection, and a vibe that makes you feel right at home.</p>
+                <ul class="about-features">
+                    <li><i data-lucide="check-circle"></i> 100% Halaal Certified</li>
+                    <li><i data-lucide="check-circle"></i> Flame Grilled Daily</li>
+                    <li><i data-lucide="check-circle"></i> Fresh Local Ingredients</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="location">
+        <div class="container">
+            <div class="location-card">
+                <div class="location-info">
+                    <h2 class="section-title">FIND <span class="text-accent">US</span></h2>
+                    <div class="info-item">
+                        <i data-lucide="map-pin"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>South C, Kawi Road, Opposite Boma Institute, Nairobi</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i data-lucide="clock"></i>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Monday - Sunday: 11:00 AM - 9:00 PM</p>
+                            <span id="open-status" class="status-badge">Checking...</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i data-lucide="phone"></i>
+                        <div>
+                            <h4>Contact</h4>
+                            <p>+254 700 000 000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-map">
+                    <a href="https://www.google.com/maps/place/The+Food+Trailer+Nairobi+-+South+C/@-1.3268543,36.8307732,17z/data=!3m1!4b1!4m6!3m5!1s0x182f1bbebee25da9:0x6ae1d6563d1305ba!8m2!3d-1.3268543!4d36.8333481!16s%2Fg%2F11hz60_5rz?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
+                        <img src="assets/map.png" alt="Map Location - The Food Trailer South C" class="map-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <img src="assets/logo.svg" alt="The Food Trailer" class="footer-logo">
+                <p>The trailer under the trees.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/foodtrailernbi/" target="_blank"><i data-lucide="instagram"></i></a>
+                    <a href="#"><i data-lucide="facebook"></i></a>
+                    <a href="#"><i data-lucide="twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#featured">Specials</a></li>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#location">Location</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Get the Flavour</h4>
+                <p>Join our list for weekly specials.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email">
+                    <button type="submit" class="btn btn-primary">Join</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 The Food Trailer Nairobi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

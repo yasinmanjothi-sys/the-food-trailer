@@ -1,0 +1,19 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Subtly shaded background to help with blending -->
+  <rect width="100" height="100" fill="transparent" />
+  
+  <!-- Chevron Patterns (from door edges) -->
+  <path d="M0 20 L10 10 L20 20 L30 10 L40 20 L50 10 L60 20 L70 10 L80 20 L90 10 L100 20" 
+        stroke="#2a9d8f" stroke-width="1.5" fill="none" opacity="0.3" />
+        
+  <path d="M0 80 L10 90 L20 80 L30 90 L40 80 L50 90 L60 80 L70 90 L80 80 L90 90 L100 80" 
+        stroke="#1e69a5" stroke-width="1.5" fill="none" opacity="0.25" />
+
+  <!-- Geometric Circle motif (from door center) -->
+  <circle cx="50" cy="50" r="15" stroke="#e9c46a" stroke-width="1" fill="none" opacity="0.2" />
+  <circle cx="50" cy="50" r="10" stroke="#f4a261" stroke-width="0.5" fill="none" opacity="0.15" />
+
+  <!-- Rectangular motifs with staggered offsets -->
+  <rect x="10" y="35" width="15" height="25" rx="2" stroke="#d62828" stroke-width="1" fill="none" opacity="0.2" />
+  <rect x="75" y="40" width="15" height="20" rx="2" stroke="#1e69a5" stroke-width="1" fill="none" opacity="0.2" />
+</svg>
