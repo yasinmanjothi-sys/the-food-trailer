@@ -98,35 +98,17 @@
                 </div>
             </div>
             <div id="menu-container" class="menu-grid">
-                <!-- Pre-filled for instant visibility and SEO -->
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h4>Double Wheeler</h4>
-                        <p>Two 100g Beef Patties</p>
-                    </div>
-                    <div class="menu-item-bottom">
-                        <span class="item-price">Ksh 650</span>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h4>Zinga Burger</h4>
-                        <p>Cheesy beef 200g, bacon & white sauce</p>
-                    </div>
-                    <div class="menu-item-bottom">
-                        <span class="item-price">Ksh 800</span>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h4>Trailer Burger</h4>
-                        <p>One 100g beef patty</p>
-                    </div>
-                    <div class="menu-item-bottom">
-                        <span class="item-price">Ksh 550</span>
-                    </div>
-                </div>
-                <!-- ... other items will be swapped by JS ... -->
+                <!-- FULL BURGER MENU PRE-FILLED FOR INSTANT LOAD -->
+                <div class="menu-item"><div class="menu-item-info"><h4>Double Wheeler</h4><p>Two 100g Beef Patties</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 650</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Zinga Burger</h4><p>Cheesy beef 200g, bacon & white sauce</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 800</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Trailer Burger</h4><p>One 100g beef patty</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 550</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Power House Burger</h4><p>Beef 100g, steak 100g & chicken 100g</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 850</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Bad Boy Burger</h4><p>Beef 100g, Bacon & White sauce (Avo Splash)</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 750</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Forget Me Not</h4><p>Grilled chicken 200g & pineapple</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 850</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Cuckoo Trailer</h4><p>One 100g grilled chicken patty</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 650</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Three Wheeler</h4><p>Three 100g beef patties</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 750</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Trailer Steak</h4><p>One 100g rump steak</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 700</span></div></div>
+                <div class="menu-item"><div class="menu-item-info"><h4>Paneer Trailer</h4><p>100g grilled veggie patty</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 500</span></div></div>
             </div>
         </div>
     </section>
@@ -225,10 +207,11 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.2"></script>
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>
