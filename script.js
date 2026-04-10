@@ -42,32 +42,19 @@ const menuData = {
     ]
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Food Trailer Script Initializing...");
-
-    // 1. Menu Initialization (Highest Priority)
+// Independent logic for immediate execution
+function populateMenu(category) {
     const menuContainer = document.getElementById('menu-container');
-    const menuTabs = document.querySelectorAll('.menu-tab');
+    if (!menuContainer) return;
 
-    function populateMenu(category) {
-        if (!menuContainer) {
-            console.error("Menu container not found!");
-            return;
-        }
+    try {
+        const items = menuData[category];
+        if (!items) return;
 
-        try {
-            menuContainer.innerHTML = '';
-            const items = menuData[category];
-            
-            if (!items) {
-                console.error(`Category ${category} not found`);
-                return;
-            }
-
-            items.forEach(item => {
-                const itemEl = document.createElement('div');
-                itemEl.className = 'menu-item';
-                itemEl.innerHTML = `
+        let html = '';
+        items.forEach(item => {
+            html += `
+                <div class="menu-item">
                     <div class="menu-item-info">
                         <h4>${item.name}</h4>
                         <p>${item.desc}</p>
@@ -75,18 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="menu-item-bottom">
                         <span class="item-price">Ksh ${item.price}</span>
                     </div>
-                `;
-                menuContainer.appendChild(itemEl);
-            });
-            
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        } catch (err) {
-            console.error("Error populating menu:", err);
-        }
+                </div>
+            `;
+        });
+        
+        menuContainer.innerHTML = html;
+        if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+    } catch (err) {
+        console.error("Error populating menu:", err);
     }
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Menu Switching
+    const menuTabs = document.querySelectorAll('.menu-tab');
     if (menuTabs.length > 0) {
         menuTabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -97,15 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Navbar Scroll Effect
+    // 2. Navbar Scroll
     const navbar = document.getElementById('navbar');
     if (navbar) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
+            else { navbar.classList.remove('scrolled'); }
         });
     }
 
@@ -126,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
             const nairobiTime = new Date(utc + (3600000 * 3));
             const hour = nairobiTime.getHours();
-            
             if (hour >= 11 && hour < 21) {
                 openStatus.textContent = 'OPEN NOW';
                 openStatus.className = 'status-badge open';
@@ -134,11 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 openStatus.textContent = 'CLOSED';
                 openStatus.className = 'status-badge closed';
             }
-        } catch (err) {
-            console.error("Error checking open status:", err);
-        }
+        } catch (err) { console.error("Error checking open status:", err); }
     }
 
-    // Initial load
+    // Initial population is now unnecessary as we pre-fill HTML, 
+    // but running it once ensures everything is synced.
     populateMenu('burgers');
 });
