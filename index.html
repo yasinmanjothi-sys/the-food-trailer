@@ -14,8 +14,187 @@
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #07b7c2;
+            --primary-hover: #059ba5;
+            --bg-dark: #060b0d;
+            --bg-card: #0e1619;
+            --text-main: #fdfdfd;
+            --text-muted: #a0a0a0;
+            --white: #ffffff;
+            --accent: #07b7c2;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            
+            --container: 1200px;
+            --transition-fast: 0.2s ease;
+            --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+            --door-blue: #1e69a5;
+            --door-red: #d62828;
+            --door-orange: #f4a261;
+            --door-yellow: #e9c46a;
+            --door-green: #2a9d8f;
+            --door-pattern-opacity: 0.1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: url('assets/pattern.svg');
+            background-repeat: repeat;
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: -0.02em; }
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
+        img { max-width: 100%; display: block; }
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+        .text-accent { color: var(--primary); }
+        .badge {
+            display: inline-block; padding: 0.4rem 1rem;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .section-title { font-size: 2.5rem; margin-bottom: 3rem; position: relative; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.8rem 2rem; border-radius: 8px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem;
+            cursor: pointer; transition: var(--transition-base); border: none;
+        }
+        .btn-primary { background-color: var(--primary); color: var(--bg-dark); }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(7, 183, 194, 0.4);
+        }
+        .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: var(--bg-dark); }
+        .btn-secondary { background: var(--glass); border: 1px solid var(--glass-border); color: var(--white); }
+        .btn-secondary:hover { background: var(--glass-border); }
+
+        #navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 1rem 0; transition: var(--transition-base);
+            background: rgba(6, 11, 13, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        #navbar.scrolled {
+            background: rgba(6, 11, 13, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 0.5rem 0; border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-content { display: flex; align-items: center; justify-content: space-between; }
+        #nav-logo { height: 50px; transition: var(--transition-fast); }
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+        .nav-links a:hover { color: var(--primary); }
+        .mobile-menu-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; }
+
+        #hero { height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 60%; height: 100%; background: linear-gradient(90deg, var(--bg-dark) 40%, transparent 100%); z-index: 1; }
+        .hero-content { display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 4rem; position: relative; z-index: 2; }
+        #hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        #hero p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 500px; }
+        .hero-btns { display: flex; gap: 1.5rem; }
+        .hero-image img { border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--glass-border); }
+        .floating { animation: floating 6s ease-in-out infinite; }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+        #featured { padding: 8rem 0; background: radial-gradient(circle at 10% 20%, rgba(7, 183, 194, 0.05) 0%, transparent 60%); }
+        .featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .featured-card {
+            background: var(--bg-card); border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--glass-border); transition: var(--transition-base);
+            position: relative; border-bottom: 3px solid var(--primary);
+            display: flex; flex-direction: column;
+        }
+        .featured-card:hover { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(7, 183, 194, 0.2); border-color: var(--primary); }
+        .card-image { width: 100%; height: 300px; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .featured-card:hover .card-image img { transform: scale(1.1); }
+        .card-content { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
+
+        #menu { padding: 8rem 0; }
+        .menu-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 4rem; }
+        .menu-tabs { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .menu-tab { padding: 0.6rem 1.5rem; border-radius: 50px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-weight: 600; cursor: pointer; transition: var(--transition-fast); }
+        .menu-tab.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+        .menu-item {
+            background: var(--bg-card); padding: 1.5rem; border-radius: 12px;
+            border: 1px solid var(--glass-border); display: flex; flex-direction: column;
+            justify-content: space-between; border-left: 4px solid var(--primary);
+        }
+        .menu-item:nth-child(4n+1) { border-left-color: var(--door-orange); }
+        .menu-item:nth-child(4n+2) { border-left-color: var(--door-red); }
+        .menu-item:nth-child(4n+3) { border-left-color: var(--door-green); }
+        .menu-item-info h4 { font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--white); }
+        .menu-item-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .menu-item-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .item-price { font-weight: 700; color: var(--primary); }
+
+        #about { padding: 8rem 0; }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; }
+        .image-stack { position: relative; }
+        .image-stack img { border-radius: 20px; box-shadow: var(--shadow); }
+        .experience-badge { position: absolute; bottom: -30px; right: -30px; background: var(--primary); color: var(--bg-dark); padding: 1.5rem; border-radius: 16px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .experience-badge .years { font-size: 2rem; font-weight: 800; line-height: 1; }
+        .about-features { margin-top: 2rem; }
+        .about-features li { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; font-weight: 600; }
+        .about-features li i { color: var(--primary); }
+
+        #location { padding: 8rem 0; }
+        .location-card { background: var(--bg-card); border-radius: 24px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--glass-border); }
+        .location-info { padding: 4rem; }
+        .info-item { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .info-item i { color: var(--primary); flex-shrink: 0; }
+        .info-item h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .status-badge { display: inline-block; padding: 0.2rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 0.5rem; }
+        .status-badge.open { background: rgba(0, 255, 128, 0.1); color: #00ff80; }
+        .status-badge.closed { background: rgba(255, 60, 60, 0.1); color: #ff3c3c; }
+        .location-map { background: #151e21; display: flex; overflow: hidden; }
+        .map-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .map-link:hover .map-img { transform: scale(1.05); }
+
+        #footer { padding: 6rem 0 2rem; background: #020405; border-top: 1px solid var(--glass-border); }
+        .footer-content { display: grid; grid-template-columns: 1.5fr 1fr 1.5fr; gap: 4rem; margin-bottom: 4rem; }
+        .footer-logo { height: 60px; margin-bottom: 1.5rem; }
+        .social-links { display: flex; gap: 1.2rem; }
+        .social-links a { width: 40px; height: 40px; background: var(--glass); display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--glass-border); }
+        .social-links a:hover { background: var(--primary); color: var(--bg-dark); }
+        .newsletter-form { display: flex; gap: 0.5rem; }
+        .newsletter-form input { flex: 1; padding: 0.8rem 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--white); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.85rem; }
+
+        @media (max-width: 992px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-overlay { width: 100%; background: linear-gradient(180deg, var(--bg-dark) 40%, rgba(6,11,13,0.5) 100%); }
+            .hero-text { order: 2; }
+            .hero-image { order: 1; }
+            .about-content, .location-card { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            .footer-newsletter { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-dark); padding: 2rem; border-bottom: 1px solid var(--glass-border); }
+            .nav-links.active { display: flex; }
+            .nav-cta { display: none; }
+            .mobile-menu-toggle { display: block; }
+            #hero { padding-top: 120px; height: auto; min-height: 100vh; }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-newsletter { grid-column: span 1; }
+        }
+    </style>
 </head>
 <body class="dark-theme">
     <nav id="navbar">
@@ -30,7 +209,7 @@
                 <li><a href="#location">Find Us</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="https://wa.me/254700000000" class="btn btn-primary" id="order-btn">Order Now</a>
+                <a href="https://wa.me/254700000000" class="btn btn-primary">Order Now</a>
             </div>
             <button class="mobile-menu-toggle" aria-label="Toggle Menu">
                 <i data-lucide="menu"></i>
@@ -51,7 +230,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="assets/wings.jpg" alt="Signature Wings and Onion Rings" class="floating">
+                <img src="assets/wings.jpg" alt="Signature Wings" class="floating">
             </div>
         </div>
     </header>
@@ -61,19 +240,11 @@
             <h2 class="section-title">TODAY'S <span class="text-accent">SPECIALS</span></h2>
             <div class="featured-grid">
                 <div class="featured-card">
-                    <div class="card-image">
-                        <img src="assets/masala-fries.jpg" alt="Masala Fries">
-                    </div>
-                    <div class="card-content">
-                        <h3>Masala Fries</h3>
-                        <p>Our famous crispy fries tossed in a spicy, aromatic masala house blend.</p>
-                        <span class="price">Ksh 250</span>
-                    </div>
+                    <div class="card-image"><img src="assets/masala-fries.jpg" alt="Masala Fries"></div>
+                    <div class="card-content"><h3>Masala Fries</h3><p>Our famous crispy fries tossed in a spicy, aromatic masala house blend.</p><span class="price">Ksh 250</span></div>
                 </div>
                 <div class="featured-card highlight">
-                    <div class="card-image">
-                        <img src="assets/bad-boy-burger.jpg" alt="Bad Boy Burger (Avo Splash)">
-                    </div>
+                    <div class="card-image"><img src="assets/bad-boy-burger.jpg" alt="Bad Boy Burger"></div>
                     <div class="card-content">
                         <span class="badge">Fan Favorite</span>
                         <h3>BAD BOY BURGER</h3>
@@ -98,7 +269,7 @@
                 </div>
             </div>
             <div id="menu-container" class="menu-grid">
-                <!-- FULL BURGER MENU PRE-FILLED FOR INSTANT LOAD -->
+                <!-- Burger menu pre-filled for instant visibility -->
                 <div class="menu-item"><div class="menu-item-info"><h4>Double Wheeler</h4><p>Two 100g Beef Patties</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 650</span></div></div>
                 <div class="menu-item"><div class="menu-item-info"><h4>Zinga Burger</h4><p>Cheesy beef 200g, bacon & white sauce</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 800</span></div></div>
                 <div class="menu-item"><div class="menu-item-info"><h4>Trailer Burger</h4><p>One 100g beef patty</p></div><div class="menu-item-bottom"><span class="item-price">Ksh 550</span></div></div>
@@ -117,20 +288,16 @@
         <div class="container about-content">
             <div class="about-image">
                 <div class="image-stack">
-                    <img src="assets/wings.jpg" alt="The Experience" class="img-1">
-                    <div class="experience-badge">
-                        <span class="years">5+</span>
-                        <span class="text">Years of Flavor</span>
-                    </div>
+                    <img src="assets/wings.jpg" alt="The Experience">
+                    <div class="experience-badge"><span class="years">5+</span><span class="text">Years</span></div>
                 </div>
             </div>
             <div class="about-text">
                 <h2 class="section-title">FROM THE TRAILER <br><span class="text-accent">TO YOUR HEART</span></h2>
-                <p>What started as a simple idea under the trees has grown into South C's most beloved food destination. We believe in high-quality ingredients, flame-grilled perfection, and a vibe that makes you feel right at home.</p>
+                <p>Experience South C's beloved food destination. Flame-grilled perfection under the trees.</p>
                 <ul class="about-features">
                     <li><i data-lucide="check-circle"></i> 100% Halaal Certified</li>
                     <li><i data-lucide="check-circle"></i> Flame Grilled Daily</li>
-                    <li><i data-lucide="check-circle"></i> Fresh Local Ingredients</li>
                 </ul>
             </div>
         </div>
@@ -141,32 +308,12 @@
             <div class="location-card">
                 <div class="location-info">
                     <h2 class="section-title">FIND <span class="text-accent">US</span></h2>
-                    <div class="info-item">
-                        <i data-lucide="map-pin"></i>
-                        <div>
-                            <h4>Location</h4>
-                            <p>South C, Kawi Road, Opposite Boma Institute, Nairobi</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i data-lucide="clock"></i>
-                        <div>
-                            <h4>Hours</h4>
-                            <p>Monday - Sunday: 11:00 AM - 9:00 PM</p>
-                            <span id="open-status" class="status-badge">Checking...</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i data-lucide="phone"></i>
-                        <div>
-                            <h4>Contact</h4>
-                            <p>+254 700 000 000</p>
-                        </div>
-                    </div>
+                    <div class="info-item"><i data-lucide="map-pin"></i><div><h4>Location</h4><p>South C, Nairobi</p></div></div>
+                    <div class="info-item"><i data-lucide="clock"></i><div><h4>Hours</h4><p>Daily: 11AM - 9PM</p><span id="open-status" class="status-badge">Checking...</span></div></div>
                 </div>
                 <div class="location-map">
-                    <a href="https://www.google.com/maps/place/The+Food+Trailer+Nairobi+-+South+C/@-1.3268543,36.8307732,17z/data=!3m1!4b1!4m6!3m5!1s0x182f1bbebee25da9:0x6ae1d6563d1305ba!8m2!3d-1.3268543!4d36.8333481!16s%2Fg%2F11hz60_5rz?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
-                        <img src="assets/map.png" alt="Map Location - The Food Trailer South C" class="map-img">
+                    <a href="https://www.google.com/maps/place/The+Food+Trailer+Nairobi+-+South+C/@-1.3268543,36.8307732,17z" target="_blank" class="map-link">
+                        <img src="assets/map.png" alt="Map" class="map-img">
                     </a>
                 </div>
             </div>
@@ -176,42 +323,101 @@
     <footer id="footer">
         <div class="container footer-content">
             <div class="footer-brand">
-                <img src="assets/logo.svg" alt="The Food Trailer" class="footer-logo">
+                <img src="assets/logo.svg" alt="Logo" class="footer-logo">
                 <p>The trailer under the trees.</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/foodtrailernbi/" target="_blank"><i data-lucide="instagram"></i></a>
-                    <a href="#"><i data-lucide="facebook"></i></a>
-                    <a href="#"><i data-lucide="twitter"></i></a>
                 </div>
             </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#menu">Menu</a></li>
-                    <li><a href="#featured">Specials</a></li>
-                    <li><a href="#about">Our Story</a></li>
-                    <li><a href="#location">Location</a></li>
-                </ul>
-            </div>
             <div class="footer-newsletter">
-                <h4>Get the Flavour</h4>
-                <p>Join our list for weekly specials.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Your Email">
-                    <button type="submit" class="btn btn-primary">Join</button>
-                </form>
+                <h4>Newsletter</h4>
+                <form class="newsletter-form"><input type="email" placeholder="Email"><button type="submit" class="btn btn-primary">Join</button></form>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 The Food Trailer Nairobi. All rights reserved.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2026 The Food Trailer Nairobi.</p></div>
     </footer>
 
-    <script src="script.js?v=1.2"></script>
     <script>
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        const menuData = {
+            burgers: [
+                { name: "Double Wheeler", desc: "Two 100g Beef Patties", price: "650" },
+                { name: "Zinga Burger", desc: "Cheesy beef 200g, bacon & white sauce", price: "800" },
+                { name: "Trailer Burger", desc: "One 100g beef patty", price: "550" },
+                { name: "Power House Burger", desc: "Beef 100g & chicken 100g", price: "850" },
+                { name: "Bad Boy Burger", desc: "Beef 100g, Bacon & Avo", price: "750" },
+                { name: "Forget Me Not", desc: "Grilled chicken & pineapple", price: "850" },
+                { name: "Cuckoo Trailer", desc: "100g grilled chicken", price: "650" },
+                { name: "Three Wheeler", desc: "Three 100g beef patties", price: "750" },
+                { name: "Trailer Steak", desc: "100g rump steak", price: "700" },
+                { name: "Paneer Trailer", desc: "100g grilled veggie", price: "500" }
+            ],
+            grills: [
+                { name: "Spatchcock Chicken", desc: "Flame grilled with fries", price: "500" },
+                { name: "Fish & Chips", desc: "English style", price: "750" },
+                { name: "Sirloin Steak", desc: "Prime cut", price: "950" },
+                { name: "Tenderloin", desc: "Prime cut", price: "950" },
+                { name: "8pcs Wings", desc: "BBQ or Buffalo", price: "600" }
+            ],
+            sides: [
+                { name: "Loaded Fries", desc: "With toppings", price: "550" },
+                { name: "Masala Fries", desc: "Spicy aromatic", price: "250" },
+                { name: "Garlic Fries", desc: "Herb butter", price: "200" },
+                { name: "Chicken Nuggets", desc: "With fries", price: "300" },
+                { name: "Onion Rings", desc: "Crunchy", price: "150" }
+            ],
+            drinks: [
+                { name: "Trailer Mojito", desc: "House special", price: "350" },
+                { name: "Dawa", desc: "Honey, lemon & ginger", price: "150" },
+                { name: "Kenyan Chai", desc: "Freshly brewed", price: "100" },
+                { name: "Pineapple Mint", desc: "Freshly squeezed", price: "200" }
+            ]
+        };
+
+        function populateMenu(category) {
+            const container = document.getElementById('menu-container');
+            if (!container) return;
+            const items = menuData[category];
+            let html = '';
+            items.forEach(item => {
+                html += `<div class="menu-item"><div class="menu-item-info"><h4>${item.name}</h4><p>${item.desc}</p></div><div class="menu-item-bottom"><span class="item-price">Ksh ${item.price}</span></div></div>`;
+            });
+            container.innerHTML = html;
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
+
+        document.querySelectorAll('.menu-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                populateMenu(tab.dataset.category);
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const links = document.querySelector('.nav-links');
+        if (toggle && links) {
+            toggle.addEventListener('click', () => links.classList.toggle('active'));
+        }
+
+        const openStatus = document.getElementById('open-status');
+        if (openStatus) {
+            const hour = new Date(new Date().getTime() + (new Date().getTimezoneOffset() * 60000) + (3600000 * 3)).getHours();
+            if (hour >= 11 && hour < 21) {
+                openStatus.textContent = 'OPEN NOW';
+                openStatus.className = 'status-badge open';
+            } else {
+                openStatus.textContent = 'CLOSED';
+                openStatus.className = 'status-badge closed';
+            }
+        }
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     </script>
 </body>
 </html>
