@@ -43,47 +43,30 @@ const menuData = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.getElementById('navbar');
+    console.log("Food Trailer Script Initializing...");
+
+    // 1. Menu Initialization (Highest Priority)
     const menuContainer = document.getElementById('menu-container');
     const menuTabs = document.querySelectorAll('.menu-tab');
-    const openStatus = document.getElementById('open-status');
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
 
-    // Navbar Scroll Effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
-    // Mobile Menu Toggle
-    mobileMenuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        // Simple toggle logic - in reality you'd want a nicer mobile nav
-    });
-
-    // Menu Category Switching
     function populateMenu(category) {
-        if (!menuContainer) return;
-        
-        menuContainer.style.opacity = '0';
-        
-        setTimeout(() => {
+        if (!menuContainer) {
+            console.error("Menu container not found!");
+            return;
+        }
+
+        try {
             menuContainer.innerHTML = '';
             const items = menuData[category];
             
             if (!items) {
-                console.error(`Category ${category} not found in menuData`);
-                menuContainer.style.opacity = '1';
+                console.error(`Category ${category} not found`);
                 return;
             }
-            
+
             items.forEach(item => {
                 const itemEl = document.createElement('div');
-                itemEl.className = 'menu-item'; // Removed animate-in as it's not in CSS
+                itemEl.className = 'menu-item';
                 itemEl.innerHTML = `
                     <div class="menu-item-info">
                         <h4>${item.name}</h4>
@@ -96,44 +79,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuContainer.appendChild(itemEl);
             });
             
-            // Ensure visibility even if lucide fails
-            menuContainer.style.opacity = '1';
-            
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-        }, 200);
+        } catch (err) {
+            console.error("Error populating menu:", err);
+        }
     }
 
-    menuTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            menuTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            populateMenu(tab.dataset.category);
+    if (menuTabs.length > 0) {
+        menuTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                menuTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                populateMenu(tab.dataset.category);
+            });
         });
-    });
+    }
 
-    // Check Open Status (Nairobi Time: UTC+3)
-    function checkStatus() {
-        const now = new Date();
-        // Convert to Nairobi Time (UTC+3)
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        const nairobiTime = new Date(utc + (3600000 * 3));
-        const hour = nairobiTime.getHours();
-        
-        // Assuming 11 AM to 9 PM
-        if (hour >= 11 && hour < 21) {
-            openStatus.textContent = 'OPEN NOW';
-            openStatus.className = 'status-badge open';
-        } else {
-            openStatus.textContent = 'CLOSED';
-            openStatus.className = 'status-badge closed';
+    // 2. Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+
+    // 3. Mobile Menu
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // 4. Open Status
+    const openStatus = document.getElementById('open-status');
+    if (openStatus) {
+        try {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const nairobiTime = new Date(utc + (3600000 * 3));
+            const hour = nairobiTime.getHours();
+            
+            if (hour >= 11 && hour < 21) {
+                openStatus.textContent = 'OPEN NOW';
+                openStatus.className = 'status-badge open';
+            } else {
+                openStatus.textContent = 'CLOSED';
+                openStatus.className = 'status-badge closed';
+            }
+        } catch (err) {
+            console.error("Error checking open status:", err);
         }
     }
 
     // Initial load
     populateMenu('burgers');
-    checkStatus();
 });
-
-// Animations & Styles are now handled in the CSS file for performance
