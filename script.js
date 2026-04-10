@@ -67,15 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Menu Category Switching
     function populateMenu(category) {
+        if (!menuContainer) return;
+        
         menuContainer.style.opacity = '0';
         
         setTimeout(() => {
             menuContainer.innerHTML = '';
             const items = menuData[category];
             
+            if (!items) {
+                console.error(`Category ${category} not found in menuData`);
+                menuContainer.style.opacity = '1';
+                return;
+            }
+            
             items.forEach(item => {
                 const itemEl = document.createElement('div');
-                itemEl.className = 'menu-item animate-in';
+                itemEl.className = 'menu-item'; // Removed animate-in as it's not in CSS
                 itemEl.innerHTML = `
                     <div class="menu-item-info">
                         <h4>${item.name}</h4>
@@ -88,8 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuContainer.appendChild(itemEl);
             });
             
-            lucide.createIcons();
+            // Ensure visibility even if lucide fails
             menuContainer.style.opacity = '1';
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }, 200);
     }
 
